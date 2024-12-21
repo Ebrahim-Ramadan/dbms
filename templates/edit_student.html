@@ -2,10 +2,20 @@
 <html>
 <head>
     <title>Edit Student</title>
+    <style>
+        form.editForm >*{
+    padding: 4px;
+}
+form{
+    padding: 1rem;
+}
+    </style>
 </head>
 <body>
     <h1>Edit Student</h1>
-    <form method="POST">
+    <a href="/students">Back to Students List</a>
+
+    <form method="POST" class="editForm">
         <div>
             <label>Name:</label>
             <input type="text" name="name" value="{{ student.name }}" required>
@@ -28,6 +38,5 @@
         </div>
         <button type="submit">Update Student</button>
     </form>
-    <a href="/students">Back to Students List</a>
 </body>
 </html>

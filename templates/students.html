@@ -9,7 +9,7 @@
 <table>
     <thead>
         <tr>
-            <th>Enrollment year</th>
+            <th>en. year</th>
             <th>Name</th>
             <th>Major</th>
             <th>Age</th>
@@ -27,11 +27,10 @@
             <td>{{ student['age'] }}</td>
             <td>{{ student['gpa'] }}</td>
             <td>
-                <!-- Delete Student Button -->
-                <a href="{{ url_for('delete_student', id=student['id']) }}" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                <a href="{{ url_for('delete_student', id=student['id']) }}" onclick="return confirm('Are you sure you want to delete this student?')">DEL</a>
             </td>
             <td>
-                <!-- Edit Button that navigates to the edit page with the student ID -->
+               
                 <a href="/students/edit/{{ student.id }}">Edit</a>
             </td>
         </tr>

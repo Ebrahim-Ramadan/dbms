@@ -7,6 +7,11 @@ form {
     background-color: #f9f9f9;
 }
 
+@media (max-width: 600px) {
+    form {
+        width: 80%;
+    }
+}
 form label {
     display: block;
     margin-bottom: 0.5rem;
@@ -34,3 +39,6 @@ form button:hover {
 th, td{
     padding-right: 4px;
 }
+
+
+
