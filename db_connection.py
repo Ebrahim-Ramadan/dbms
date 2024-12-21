@@ -1,11 +1,17 @@
 import pyodbc
 
+connection_string = (
+    'DRIVER={ODBC Driver 17 for SQL Server};'
+    'SERVER=SHARMOWUVESJOJI\SQLEXPRESS;'
+    'DATABASE=uni;'
+    'Trusted_Connection=yes;'
+)
+
+try:
+    conn = pyodbc.connect(connection_string)
+    print("Connection successful!")
+    conn.close()
+except Exception as e:
+    print("Connection failed:", e)
 def get_db_connection():
-    conn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};'
-        'SERVER=<server_name>;'
-        'DATABASE=<database_name>;'
-        'UID=<username>;'
-        'PWD=<password>'
-    )
-    return conn
+    return pyodbc.connect(connection_string)

@@ -22,11 +22,15 @@ form input, form button {
 }
 
 form button {
-    background-color: #333;
+    background-color: #303030;
     color: white;
     cursor: pointer;
 }
 
 form button:hover {
     background-color: #555;
+}
+
+th{
+    padding-right: 4px;
 }

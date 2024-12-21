@@ -1,29 +1,42 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect, render_template
 from db_connection import get_db_connection
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return 'Hello World!'
 @app.route('/students', methods=['GET'])
 def get_students():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT id, name, major FROM students')
-    students = [{'id': row[0], 'name': row[1], 'major': row[2]} for row in cursor.fetchall()]
+    cursor.execute('SELECT id, enrollment_year, name, major , age, gpa FROM students')
+    students = [{'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 'gpa': row[5]} for row in cursor.fetchall()]
     conn.close()
-    return jsonify(students)
+    return render_template('students.html', students=students)
 
 @app.route('/students', methods=['POST'])
 def add_student():
-    data = request.json
+    data = request.form  # Changed from json to form for the POST request
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO students (id, name, major) VALUES (?, ?, ?)',
-        (data['id'], data['name'], data['major'])
+        'INSERT INTO students (name, major, age, enrollment_year, gpa) VALUES (?, ?, ?, ?, ?)',
+        (data['name'], data['major'], data['age'], data['enrollment_year'], data['gpa'])
     )
     conn.commit()
     conn.close()
-    return jsonify({'message': 'Student added successfully!'}), 201
+    return redirect('/students')  # Redirect to the GET route to see the updated list
+
+
+@app.route('/students/delete/<int:id>', methods=['GET'])
+def delete_student(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM students WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return redirect('/students')  # Redirect to the students list after deletion
 
 if __name__ == '__main__':
     app.run(debug=True)
