@@ -17,7 +17,7 @@ def get_students():
 
 @app.route('/students', methods=['POST'])
 def add_student():
-    data = request.form  # Changed from json to form for the POST request
+    data = request.form  
     age = int(data['age']) if data['age'] else None
     enrollment_year = int(data['enrollment_year']) if data['enrollment_year'] else None
     conn = get_db_connection()
@@ -28,7 +28,7 @@ def add_student():
         )
     conn.commit()
     conn.close()
-    return redirect('/students')  # Redirect to the GET route to see the updated list
+    return redirect('/students')  
 
 
 @app.route('/students/delete/<int:id>', methods=['GET'])
@@ -38,7 +38,7 @@ def delete_student(id):
     cursor.execute('DELETE FROM students WHERE id = ?', (id,))
     conn.commit()
     conn.close()
-    return redirect('/students')  # Redirect to the students list after deletion
+    return redirect('/students')  
 
 
 
@@ -66,7 +66,7 @@ def update_student(id):
     data = request.form
     age = int(data['age']) if data['age'] else None
     enrollment_year = int(data['enrollment_year']) if data['enrollment_year'] else None
-    gpa = float(data['gpa']) if data['gpa'].strip() else None  # Handle empty GPA
+    gpa = float(data['gpa']) if data['gpa'].strip() else None  
 
     conn = get_db_connection()
     cursor = conn.cursor()
