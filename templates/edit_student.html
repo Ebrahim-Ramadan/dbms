@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student</title>
+</head>
+<body>
+    <h1>Edit Student</h1>
+    <form method="POST">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" value="{{ student.name }}" required>
+        </div>
+        <div>
+            <label>Major:</label>
+            <input type="text" name="major" value="{{ student.major }}" required>
+        </div>
+        <div>
+            <label>Age:</label>
+            <input type="number" name="age" value="{{ student.age }}" required>
+        </div>
+        <div>
+            <label>Enrollment Year:</label>
+            <input type="number" name="enrollment_year" value="{{ student.enrollment_year }}" required>
+        </div>
+        <div>
+            <label>GPA:</label>
+            <input type="number" step="0.01" name="gpa" value="{{ student.gpa }}" >
+        </div>
+        <button type="submit">Update Student</button>
+    </form>
+    <a href="/students">Back to Students List</a>
+</body>
+</html>

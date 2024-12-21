@@ -14,7 +14,8 @@
             <th>Major</th>
             <th>Age</th>
             <th>GPA</th>
-            <th>Actions</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,10 @@
             <td>
                 <!-- Delete Student Button -->
                 <a href="{{ url_for('delete_student', id=student['id']) }}" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+            </td>
+            <td>
+                <!-- Edit Button that navigates to the edit page with the student ID -->
+                <a href="/students/edit/{{ student.id }}">Edit</a>
             </td>
         </tr>
         {% endfor %}
@@ -49,8 +54,6 @@
     <label for="enrollment_year">Enrollment Year:</label>
     <input type="number" id="enrollment_year" name="enrollment_year" required><br><br>
 
-    <label for="gpa">GPA:</label>
-    <input type="number" id="gpa" name="gpa" step="0.01" required><br><br>
 
     <button type="submit">Add Student</button>
 </form> 
