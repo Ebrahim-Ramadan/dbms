@@ -20,6 +20,10 @@ ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 def index():
     return render_template('home.html')
 
+@app.route('/register_student')
+def register_student():
+    return render_template('register_student.html')
+
 @app.route('/students', methods=['GET'])
 def get_students():
     # Check if the admin is logged in
@@ -28,8 +32,8 @@ def get_students():
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT id, enrollment_year, name, major , age, gpa FROM students')
-    students = [{'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 'gpa': row[5]} for row in cursor.fetchall()]
+    cursor.execute('SELECT student_id, enrollment_year, name, major , age, gpa, email FROM students')
+    students = [{'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 'gpa': row[5], 'email': row[6]} for row in cursor.fetchall()]
     conn.close()
     return render_template('students.html', students=students, admingusername = ADMIN_USERNAME)
 
@@ -40,13 +44,14 @@ def add_student():
         return redirect('/login')
     
     data = request.form  
-    age = int(data['age']) if data['age'] else None
-    enrollment_year = int(data['enrollment_year']) if data['enrollment_year'] else None
+    age = int(data['age'].strip()) if data['age'].strip() else None
+    enrollment_year = int(data['enrollment_year'].strip()) if data['enrollment_year'].strip() else None
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-            'INSERT INTO students (name, major, age, enrollment_year) VALUES (?, ?, ?, ?)',
-            (data['name'], data['major'], age, enrollment_year)
+            'INSERT INTO students (name, major, age, enrollment_year, email) VALUES (?, ?, ?, ?, ?)',
+            (data['name'], data['major'], age, enrollment_year, data['email'].strip())
         )
     conn.commit()
     conn.close()
@@ -61,7 +66,7 @@ def delete_student(id):
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('DELETE FROM students WHERE id = ?', (id,))
+    cursor.execute('DELETE FROM students WHERE student_id = ?', (id,))
     conn.commit()
     conn.close()
     return redirect('/students')  
@@ -76,7 +81,7 @@ def edit_student_form(id):
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT id, enrollment_year, name, major, age, gpa FROM students WHERE id = ?', (id,))
+    cursor.execute('SELECT student_id, enrollment_year, name, major, age, gpa, email FROM students WHERE student_id = ?', (id,))
     student = cursor.fetchone()
     conn.close()
     if student:
@@ -86,7 +91,8 @@ def edit_student_form(id):
             'name': student[2],
             'major': student[3],
             'age': student[4],
-            'gpa': student[5]
+            'gpa': student[5], 
+            'email': student[6]
         }
         return render_template('edit_student.html', student=student_dict)
     return 'Student not found', 404
@@ -106,9 +112,9 @@ def update_student(id):
     cursor = conn.cursor()
     cursor.execute(
             '''UPDATE students 
-               SET name = ?, major = ?, age = ?, enrollment_year = ?, gpa = ?
-               WHERE id = ?''',
-            (data['name'], data['major'], age, enrollment_year, gpa, id)
+               SET name = ?, major = ?, age = ?, enrollment_year = ?, gpa = ?, email = ?
+               WHERE student_id = ?''',
+            (data['name'], data['major'], age, enrollment_year, gpa, data['email'].strip(), id)
         )
     conn.commit()
     conn.close()

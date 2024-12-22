@@ -21,6 +21,7 @@
         <tr>
             <th>en. year</th>
             <th>Name</th>
+            <th>Email</th>
             <th>Major</th>
             <th>Age</th>
             <th>GPA</th>
@@ -33,6 +34,7 @@
         <tr>
             <td>{{ student['enrollment_year'] }}</td>
             <td>{{ student['name'] }}</td>
+            <td>{{ student['email'] }}</td>
             <td>{{ student['major'] }}</td>
             <td>{{ student['age'] }}</td>
             <td>{{ student['gpa'] }}</td>
@@ -51,22 +53,5 @@
 {% endif %}
 
 
-<!-- Add New Student Form -->
-<h2>Add a New Student</h2>
-<form action="/students" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
 
-    <label for="major">Major:</label>
-    <input type="text" id="major" name="major" required><br><br>
-
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" required><br><br>
-
-    <label for="enrollment_year">Enrollment Year:</label>
-    <input type="number" id="enrollment_year" name="enrollment_year" required><br><br>
-
-
-    <button type="submit">Add Student</button>
-</form> 
 {% endblock %}
