@@ -37,12 +37,16 @@ form button:hover {
 }
 
 th, td{
-    padding-right: 4px;
+    padding: 2px;
+    padding-right: 2px;
 }
 
-
-
-
+tbody tr:hover{
+    background-color: rgb(240, 240, 240);
+}
+tbody tr{
+    letter-spacing: 1px;
+}
 
 .admin-login-form label{
     font-size: larger;
