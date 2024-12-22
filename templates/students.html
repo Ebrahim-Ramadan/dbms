@@ -3,9 +3,22 @@
 {% block title %}Students{% endblock %}
 
 {% block content %}
-<h2>Students</h2>
+<p style="color: rgb(70, 118, 207);">logged in as {{ admingusername }}
+
+
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+    style="width: 10px;"
+    viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+    </span>
+    <button onclick="window.location.href='/logout'">Logout</button>
+
+</p>
+
+<h2 style="padding-top: 20px;">Students</h2>
 
 <!-- Student List -->
+{% if students|length > 0 %}
 <table>
     <thead>
         <tr>
@@ -30,13 +43,16 @@
                 <a href="{{ url_for('delete_student', id=student['id']) }}" onclick="return confirm('Are you sure you want to delete this student?')">DEL</a>
             </td>
             <td>
-               
                 <a href="/students/edit/{{ student.id }}">Edit</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>No students available to display.</p>
+{% endif %}
+
 
 <!-- Add New Student Form -->
 <h2>Add a New Student</h2>

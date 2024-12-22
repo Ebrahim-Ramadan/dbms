@@ -42,3 +42,8 @@ th, td{
 
 
 
+
+
+.admin-login-form label{
+    font-size: larger;
+}
