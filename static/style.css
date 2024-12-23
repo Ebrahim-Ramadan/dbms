@@ -41,8 +41,11 @@ th, td{
     padding-right: 2px;
 }
 
-tbody tr:hover{
+tbody tr{
     background-color: rgb(240, 240, 240);
+}
+tbody tr:hover{
+    background-color: rgb(219, 219, 219);
 }
 tbody tr{
     letter-spacing: 1px;
