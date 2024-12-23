@@ -23,7 +23,13 @@ def index():
 
 @app.route('/register_student')
 def register_student():
-    return render_template('register_student.html')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    # Fetch faculties
+    cursor.execute('SELECT faculty_id, name FROM faculty')
+    faculties = [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
+    conn.close()
+    return render_template('register_student.html', faculties=faculties)
 
 @app.route('/students', methods=['GET'])
 def get_students():
@@ -33,8 +39,11 @@ def get_students():
     
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT student_id, enrollment_year, name, major , age, gpa, email FROM students')
-    students = [{'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 'gpa': row[5], 'email': row[6]} for row in cursor.fetchall()]
+    cursor.execute('SELECT student_id, enrollment_year, name, major , age, gpa, email, faculty_id FROM students')
+    students = [{'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 'gpa': row[5], 'email': row[6], 'faculty_id': row[7]} for row in cursor.fetchall()]
+    
+
+    
     conn.close()
     return render_template('students.html', students=students, admingusername = ADMIN_USERNAME)
 
@@ -47,16 +56,60 @@ def add_student():
     data = request.form  
     age = int(data['age'].strip()) if data['age'].strip() else None
     enrollment_year = int(data['enrollment_year'].strip()) if data['enrollment_year'].strip() else None
+    faculty_id = int(data['faculty_id'].strip()) if data['faculty_id'].strip() else None
 
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-            'INSERT INTO students (name, major, age, enrollment_year, email) VALUES (?, ?, ?, ?, ?)',
-            (data['name'], data['major'], age, enrollment_year, data['email'].strip())
+            'INSERT INTO students (name, major, age, enrollment_year, email, faculty_id) VALUES (?, ?, ?, ?, ?, ?)',
+            (data['name'], data['major'], age, enrollment_year, data['email'].strip(), faculty_id)
         )
     conn.commit()
     conn.close()
     return redirect('/students')  
+
+@app.route('/students/faculty/<int:faculty_id>', methods=['GET'])
+def get_students_by_faculty(faculty_id):
+    # Check if the admin is logged in
+    if not session.get('logged_in'):
+        return redirect('/login')
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Query to fetch students with the specified faculty_id and faculty name
+    cursor.execute('''
+        SELECT students.student_id, students.enrollment_year, students.name, students.major,
+               students.age, students.gpa, students.email, faculty.name
+        FROM students
+        JOIN faculty ON students.faculty_id = faculty.faculty_id
+        WHERE students.faculty_id = ?
+    ''', (faculty_id,))
+    
+    students = [{
+        'id': row[0], 'enrollment_year': row[1], 'name': row[2], 'major': row[3], 'age': row[4], 
+        'gpa': row[5], 'email': row[6], 'faculty_name': row[7]
+    } for row in cursor.fetchall()]
+    
+
+        # Query to fetch professors for the given faculty_id
+    cursor.execute('''
+        SELECT professor.professor_id, professor.name, professor.email, professor.nationalID
+        FROM professor
+        JOIN professor_faculty ON professor.professor_id = professor_faculty.professor_id
+        WHERE professor_faculty.faculty_id = ?
+    ''', (faculty_id,))
+
+    professors = [{
+        'id': row[0], 'name': row[1], 'email': row[2], 'nationalID': row[3]
+    } for row in cursor.fetchall()]
+
+    conn.close()
+
+    # Render the template with the students and faculty name
+    return render_template('students_by_faculty.html', students=students, professors=professors, faculty_name=students[0]['faculty_name'] if students else 'Unknown Faculty', faculty_id=faculty_id, admingusername=ADMIN_USERNAME)
+
+
 
 
 @app.route('/students/delete/<int:id>', methods=['GET'])
@@ -217,6 +270,8 @@ def assign_internship_form():
     students = [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
     conn.close()
     return render_template('assign_internship.html', students=students)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

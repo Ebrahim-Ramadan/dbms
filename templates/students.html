@@ -35,6 +35,7 @@
             <th>Major</th>
             <th>Age</th>
             <th>GPA</th>
+            <th>faculty_id</th>
             <th></th>
             <th></th>
         </tr>
@@ -48,6 +49,11 @@
             <td>{{ student['major'] }}</td>
             <td>{{ student['age'] }}</td>
             <td>{{ student['gpa'] }}</td>
+            <td>
+                <a href="/students/faculty/{{ student['faculty_id'] }}" style="background-color: rgb(54, 54, 229); color: white; padding: 5px; border-radius: 100%; font-weight: bolder; font-size: large;">
+                    {{ student['faculty_id'] }} 
+                </a>
+            </td>
             <td>
                 <a href="{{ url_for('delete_student', id=student['id']) }}" onclick="return confirm('Are you sure you want to delete this student?')">
                     <svg

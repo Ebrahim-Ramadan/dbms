@@ -1,0 +1,64 @@
+/* Container styling */
+.container {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.5rem;
+}
+
+/* Heading styling */
+h1 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    text-align: center;
+    color: #3b82f6; /* Tailwind's blue-600 */
+    margin-bottom: 1.5rem;
+}
+
+/* Table container styling */
+.overflow-x-auto {
+    overflow-x: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.375rem; /* Tailwind's rounded-lg */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+
+/* Table header styling */
+thead {
+    background-color: #3b82f6; /* Tailwind's blue-500 */
+    color: white;
+}
+
+thead th {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Table row hover effect */
+tbody tr:hover {
+    background-color: #f3f4f6; /* Tailwind's gray-100 */
+}
+
+tbody td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Empty data message */
+.empty-message {
+    text-align: center;
+    color: #6b7280; /* Tailwind's gray-500 */
+    padding: 0.5rem 1rem;
+    colspan: 7;
+}

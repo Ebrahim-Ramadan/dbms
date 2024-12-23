@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ faculty_name }} Info</title>
+    <link rel="stylesheet" href="/static/faculty.css">
+</head>
+<body>
+    <div class="container mx-auto p-6">
+<a href="/students" style="color: rgb(54, 54, 229); font-weight: bolder; font-size: large;">
+    &#8592; back to all students
+
+</a>
+        <h1 class="text-3xl font-semibold text-center text-blue-600 mb-6">{{ faculty_name }}</h1>
+        
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold">Professors:</h2>
+            <table class="table-auto border-collapse border border-gray-300 w-full">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Email</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">National ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for professor in professors %}
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2">{{ professor.name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ professor.email }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ professor.nationalID }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="border border-gray-300 px-4 py-2 text-center">No professors assigned to this faculty yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+        <h2 class="text-xl font-semibold">Students:</h2>
+
+        <div class="overflow-x-auto shadow-lg rounded-lg">
+            <table class="min-w-full bg-white table-auto border-collapse">
+                <thead>
+                    <tr class="bg-blue-500 text-white">
+                        <th class="px-4 py-2 text-left">ID</th>
+                        <th class="px-4 py-2 text-left">Name</th>
+                        <th class="px-4 py-2 text-left">Major</th>
+                        <th class="px-4 py-2 text-left">Age</th>
+                        <th class="px-4 py-2 text-left">Enrollment Year</th>
+                        <th class="px-4 py-2 text-left">GPA</th>
+                        <th class="px-4 py-2 text-left">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr class="border-t hover:bg-gray-100">
+                        <td class="px-4 py-2">{{ student.id }}</td>
+                        <td class="px-4 py-2">{{ student.name }}</td>
+                        <td class="px-4 py-2">{{ student.major }}</td>
+                        <td class="px-4 py-2">{{ student.age }}</td>
+                        <td class="px-4 py-2">{{ student.enrollment_year }}</td>
+                        <td class="px-4 py-2">{{ student.gpa }}</td>
+                        <td class="px-4 py-2">{{ student.email }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="px-4 py-2 text-center text-gray-500">No students found for this faculty.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
