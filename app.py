@@ -128,15 +128,12 @@ def update_student(id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Get the 'redirect' parameter from the query string
         redirect_url = request.args.get('redirect', default=url_for('get_students'))
-        print('form', request.form)
+
         username = request.form['username']
         password = request.form['password']
-        print('os env', ADMIN_USERNAME, ADMIN_PASSWORD)
-        print('cre', username, password)
+
         if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
-            print('admin login')
             session['logged_in'] = True
             return redirect(redirect_url)
         else:
