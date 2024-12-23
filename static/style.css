@@ -54,3 +54,26 @@ tbody tr{
 .admin-login-form label{
     font-size: larger;
 }
+
+.username {
+    position: relative;
+    display: inline-block;
+}
+
+.hidden-username {
+    display: inline-block;
+    color: black;
+}
+
+.actual-username {
+    display: none;
+    color: black;
+}
+
+.username:hover .hidden-username {
+    display: none;
+}
+
+.username:hover .actual-username {
+    display: inline-block;
+}

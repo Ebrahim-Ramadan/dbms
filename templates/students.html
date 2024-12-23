@@ -3,14 +3,20 @@
 {% block title %}Students{% endblock %}
 
 {% block content %}
-<p style="color: rgb(70, 118, 207);">logged in as {{ admingusername }}
+<p style="color: rgb(70, 118, 207);">
+    logged in as 
+    <span class="username">
+        <span class="hidden-username">*********************</span> 
+        <span class="actual-username">{{ admingusername }}</span>
+    </span>
     <span>
-        <svg xmlns="http://www.w3.org/2000/svg" 
-        style="width: 10px;"
-        viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" style="width: 10px;" viewBox="0 0 448 512">
+            <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+        </svg>
     </span>
     <button onclick="window.location.href='/logout'">Logout</button>
 </p>
+
 
 
 <a href="/register_student">register a new student</a>
@@ -65,3 +71,4 @@
 
 
 {% endblock %}
+
