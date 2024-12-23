@@ -3,10 +3,10 @@
 {% block title %}Students{% endblock %}
 
 {% block content %}
-<p style="color: rgb(70, 118, 207);">
+<p style="color: rgb(70, 118, 207); font-weight: bolder;">
     logged in as 
     <span class="username">
-        <span class="hidden-username">*********************</span> 
+        <span class="hidden-username">**** ******  **********</span> 
         <span class="actual-username">{{ admingusername }}</span>
     </span>
     <span>
@@ -19,9 +19,10 @@
 
 
 
-<a href="/register_student">register a new student</a>
-<a href="/assign-internship">assign internship</a>
-<h2 style="padding-top: 20px;">Students</h2>
+<a  style="color: chocolate; font-weight: bold;" href="/register_student">register a new student &#x2192;</a>
+<br/>
+<a  style="color: chocolate; font-weight: bold;" href="/assign-internship">assign internship &#x2192;</a>
+<h2 style="padding-top: 20px;">ALL Students</h2>
 
 <!-- Student List -->
 {% if students|length > 0 %}
