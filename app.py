@@ -270,8 +270,54 @@ def assign_internship_form():
     students = [{'id': row[0], 'name': row[1]} for row in cursor.fetchall()]
     conn.close()
     return render_template('assign_internship.html', students=students)
+@app.route('/academic_advisors', methods=['GET'])
+def get_academic_advisors():
+    # Check if the admin is logged in
+    if not session.get('logged_in'):
+        return redirect('/login')
 
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
+    # Updated query to include email
+    cursor.execute('''
+        SELECT academic_advisors.academic_advisor_id, 
+               academic_advisors.name AS advisor_name,
+               academic_advisors.email AS advisor_email,
+               students.student_id, 
+               students.name AS student_name
+        FROM academic_advisors
+        LEFT JOIN students ON academic_advisors.academic_advisor_id = students.academic_advisor_id
+        ORDER BY academic_advisors.academic_advisor_id, students.student_id
+    ''')
 
+    # Process the data into a dictionary of advisors with their students
+    advisors = {}
+    for row in cursor.fetchall():
+        advisor_id = row[0]
+        advisor_name = row[1]
+        advisor_email = row[2]  # New field
+        student_id = row[3]
+        student_name = row[4]
+
+        # Create a new entry for the advisor if not already in the dictionary
+        if advisor_id not in advisors:
+            advisors[advisor_id] = {
+                'advisor_name': advisor_name,
+                'advisor_email': advisor_email,  # Add email to advisor info
+                'students': []
+            }
+
+        # Append the student to the advisor's list
+        if student_id:  # If student exists (not null)
+            advisors[advisor_id]['students'].append({
+                'student_id': student_id,
+                'student_name': student_name
+            })
+
+    conn.close()
+
+    # Render the data in the template
+    return render_template('academic_advisors.html', advisors=advisors, admingusername=ADMIN_USERNAME)
 if __name__ == '__main__':
     app.run(debug=True)

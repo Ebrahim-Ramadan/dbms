@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Advisors</title>
+    <link rel="stylesheet" href="/static/faculty.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    
+    <h1>Academic Advisors and Their Students</h1>
+
+{% if advisors %}
+    {% for advisor in advisors.values() %}
+        <h2>{{ advisor['advisor_name'] }} - 
+
+            <span>
+                <a href="https://mail.google.com/mail/u/0/?fs=1&to={{ advisor['advisor_email'] }}&tf=cm">
+                    ({{ advisor['advisor_email'] }})
+                </a>
+            </span>
+        </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in advisor['students'] %}
+                    <tr>
+                        <td>{{ student['student_id'] }}</td>
+                        <td>{{ student['student_name'] }}</td>
+                    </tr>
+                {% endfor %}
+                {% if not advisor['students'] %}
+                    <tr>
+                        <td colspan="2">No students assigned to this advisor.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <br/>
+    {% endfor %}
+{% else %}
+    <p>No academic advisors found.</p>
+{% endif %}
+
+</body>
+</html>
