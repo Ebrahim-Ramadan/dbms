@@ -4,19 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="/static/style.css"> <!-- Optional CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            background: url('/static/bg.png') no-repeat center center fixed; /* Replace with your image path */
+            background-size: cover;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(50px);
+            z-index: -1; /* Place behind all content */
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav a {
+            padding: 4px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #dadada;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ffffff;
+            background-color: #004a86;
+        }
+        h1, p {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add contrast for text */
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Home Landing Page</h1>
-    <p>Everyone can see this page.</p>
+    <div>
+        <h1>Welcome to the Home Landing Page</h1>
+        <p>Everyone can see this page.</p>
 
-    <nav>
-        <ul>
-            <li><a href="/students">View Students</a></li>
-            <li><a href="/login">Admin Login</a></li>
-            <li><a href="/assign-internship">Assign Internship</a></li>
-            <li><a href="/academic_advisors">View Academic Advisors</a></li>
-        </ul>
-    </nav>
+        <nav>
+            <ul>
+                <li><a href="/students">View Students</a></li>
+                <li><a href="/login">Admin Login</a></li>
+                <li><a href="/assign-internship">Assign Internship</a></li>
+                <li><a href="/academic_advisors">View Academic Advisors</a></li>
+            </ul>
+        </nav>
+    </div>
 </body>
 </html>
